@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sowmiya Boutique</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="font-sans bg-gray-100">
+  <header class="bg-pink-600 text-white py-4 text-center text-2xl font-bold">
+    👗 Sowmiya Boutique
+  </header>
+
+  <div class="container mx-auto px-4 py-8 flex flex-col md:flex-row gap-8">
+    <!-- Products Section -->
+    <div class="bg-white p-6 rounded-xl shadow-lg flex-1">
+      <h2 class="text-pink-600 text-xl font-semibold mb-4">🛍️ Dress Collection</h2>
+      
+      <div class="space-y-4">
+        <div class="flex justify-between items-center p-3 border-b border-gray-200">
+          <span>Women Kurti - ₹550</span>
+          <button onclick="addToCart('Women Kurti', 550)" class="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-md transition duration-200">Add</button>
+        </div>
+
+        <div class="flex justify-between items-center p-3 border-b border-gray-200">
+          <span>Men Shirt - ₹450</span>
+          <button onclick="addToCart('Men Shirt', 450)" class="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-md transition duration-200">Add</button>
+        </div>
+
+        <div class="flex justify-between items-center p-3 border-b border-gray-200">
+          <span>Jeans Pant - ₹700</span>
+          <button onclick="addToCart('Jeans Pant', 700)" class="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-md transition duration-200">Add</button>
+        </div>
+
+        <div class="flex justify-between items-center p-3 border-b border-gray-200">
+          <span>Saree - ₹1200</span>
+          <button onclick="addToCart('Saree', 1200)" class="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-md transition duration-200">Add</button>
+        </div>
+
+        <div class="flex justify-between items-center p-3 border-b border-gray-200">
+          <span>T-Shirt - ₹300</span>
+          <button onclick="addToCart('T-Shirt', 300)" class="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-md transition duration-200">Add</button>
+        </div>
+
+        <div class="flex justify-between items-center p-3 border-b border-gray-200">
+          <span>Jacket - ₹950</span>
+          <button onclick="addToCart('Jacket', 950)" class="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-md transition duration-200">Add</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cart Section -->
+    <div class="bg-white p-6 rounded-xl shadow-lg flex-1">
+      <h2 class="text-pink-600 text-xl font-semibold mb-4">🛒 Your Cart</h2>
+      
+      <div id="cartItems" class="space-y-2 mb-4"></div>
+      
+      <p class="text-lg font-bold text-red-600" id="totalPrice">Total: ₹0</p>
+      
+      <button onclick="checkout()" class="mt-4 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-md w-full transition duration-200">Place Order</button>
+      
+      <p class="mt-4 text-green-600 font-semibold text-center" id="message"></p>
+    </div>
+  </div>
+
+  <footer class="bg-gray-800 text-white text-center py-4 mt-8">
+    © 2026 Sowmiya Boutique | Simple E-commerce Project
+  </footer>
+
+  <script>
+    let cart = [];
+    let total = 0;
+
+    function addToCart(itemName, price) {
+      cart.push({ name: itemName, price: price });
+      total += price;
+
+      document.getElementById("message").innerText = "✅ Item Added to Cart!";
+      showCart();
+    }
+
+    function removeFromCart(index) {
+      total -= cart[index].price;
+      cart.splice(index, 1);
+
+      document.getElementById("message").innerText = "❌ Item Removed!";
+      showCart();
+    }
+
+    function showCart() {
+      let cartDiv = document.getElementById("cartItems");
+      cartDiv.innerHTML = "";
+
+      for (let i = 0; i < cart.length; i++) {
+        cartDiv.innerHTML += `
+          <div class="flex justify-between items-center p-2 border-b border-gray-200">
+            <span>${cart[i].name} - ₹${cart[i].price}</span>
+            <button onclick="removeFromCart(${i})" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md text-sm transition duration-200">Remove</button>
+          </div>
+        `;
+      }
+
+      document.getElementById("totalPrice").innerText = "Total: ₹" + total;
+    }
+
+    function checkout() {
+      if (cart.length > 0) {
+        cart = [];
+        total = 0;
+        showCart();
+        document.getElementById("message").innerText = "🎉 Order Placed Successfully! Thank you 🛍";
+      } else {
+        document.getElementById("message").innerText = "⚠ Cart is empty! Add items first.";
+      }
+    }
+  </script>
+</body>
+</html>
